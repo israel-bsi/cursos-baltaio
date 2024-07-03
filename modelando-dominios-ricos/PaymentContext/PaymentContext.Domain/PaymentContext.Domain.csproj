@@ -8,10 +8,16 @@
     <PackageReference Include="Flunt" Version="1.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
 </Project>
