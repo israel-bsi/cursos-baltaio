@@ -1,32 +1,23 @@
-using Dima.Api.Data;
-using Dima.Api.Handlers;
-using Dima.Core.Handlers;
-using Dima.Core.Models;
-using Dima.Core.Request.Categories;
-using Dima.Core.Response;
-using Microsoft.EntityFrameworkCore;
+using Dima.Api;
+using Dima.Api.Endpoints;
+using Dima.Api.Common.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var cnnStr = builder
-    .Configuration
-    .GetConnectionString("DefaultConnection") ?? string.Empty;
-
-builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(cnnStr));
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(x => x.CustomSchemaIds(n => n.FullName));
-builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
+builder.AddConfiguration();
+builder.AddSecurity();
+builder.AddDataContexts();
+builder.AddCrossOrigin();
+builder.AddDocumentation();
+builder.AddServices();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment()) 
+    app.ConfigureDevEnvironment();
 
-app.MapPut(
-    "/v1/categories",
-    (CreateCategoryRequest request, ICategoryHandler handler) => handler.CreateAsync(request))
-    .WithName("Categories: Create")
-    .WithSummary("Cria uma nova categoria")
-    .Produces<Response<Category>>();
+app.UseCors(ApiConfiguration.CorsPolicyName);
+app.UseSecurity();
+app.MapEndpoints();
 
 app.Run();

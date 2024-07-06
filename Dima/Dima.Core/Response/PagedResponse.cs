@@ -5,8 +5,8 @@ namespace Dima.Core.Response;
 public class PagedResponse<TData> : Response<TData>
 {
     [JsonConstructor]
-    public PagedResponse(TData? data, int totalCount, 
-        int currentPage = Configuration.DefaultPageNumber, 
+    public PagedResponse(TData? data, int totalCount,
+        int currentPage = Configuration.DefaultPageNumber,
         int pageSize = Configuration.DefaultPageSize) : base(data)
     {
         Data = data;
