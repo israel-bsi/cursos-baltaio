@@ -31,10 +31,10 @@ public class CategoryHandler(IHttpClientFactory httpClientFactory) : ICategoryHa
     }
 
     public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request) => 
-        await _httpClient.GetFromJsonAsync<Response<Category?>>($"v1/categorias/{request.Id}")
+        await _httpClient.GetFromJsonAsync<Response<Category?>>($"v1/categories/{request.Id}")
         ?? new Response<Category?>(null, 400, "Não foi possivel obter a categoria");
 
     public async Task<PagedResponse<List<Category>>> GetAllAsync(GetAllCategoriesRequest request) =>
-        await _httpClient.GetFromJsonAsync<PagedResponse<List<Category>>>($"v1/categorias") 
+        await _httpClient.GetFromJsonAsync<PagedResponse<List<Category>>>($"v1/categories") 
         ?? new PagedResponse<List<Category>>(null, 400, "Não foi possivel obter as categorias");
 }

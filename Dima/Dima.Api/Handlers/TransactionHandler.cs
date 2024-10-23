@@ -98,7 +98,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
             return new Response<Transaction?>(null, 500, "Não foi possivel retornar a transação");
         }
     }
-    public async Task<PagedResponse<List<Transaction>>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
+    public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
     {
         try
         {
@@ -107,7 +107,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
         }
         catch
         {
-            return new PagedResponse<List<Transaction>>(null, 500,
+            return new PagedResponse<List<Transaction>?>(null, 500,
                 "Não foi possivel determinar a data de início ou término ");
         }
         try
@@ -127,11 +127,11 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
 
             var count = await query.CountAsync();
 
-            return new PagedResponse<List<Transaction>>(transactions, count, request.PageNumber, request.PageSize);
+            return new PagedResponse<List<Transaction>?>(transactions, count, request.PageNumber, request.PageSize);
         }
         catch
         {
-            return new PagedResponse<List<Transaction>>(null, 500, "Não foi possivel consultar as transações");
+            return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possivel consultar as transações");
         }
     }
 }

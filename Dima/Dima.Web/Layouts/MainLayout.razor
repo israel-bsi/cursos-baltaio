@@ -5,6 +5,7 @@
     @bind-IsDarkMode="_isDarkMode" 
     Theme="Configuration.Theme" />
 <MudSnackbarProvider />
+<MudDialogProvider/>
 
 <AuthorizeView>
     <Authorized>
@@ -31,7 +32,7 @@
                 <NavMenu/>
             </MudDrawer>
             <MudMainContent>
-                <MudContainer>
+                <MudContainer Class="mt-4">
                     @Body
                 </MudContainer>
             </MudMainContent>
@@ -50,12 +51,12 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            _isDarkMode = await _mudThemeProvider.GetSystemPreference();
-            await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
-            StateHasChanged();
-        }
+        // if (firstRender)
+        // {
+        //     _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+        //     await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
+        //     StateHasChanged();
+        // }
     }
 
     private Task OnSystemPreferenceChanged(bool newValue)

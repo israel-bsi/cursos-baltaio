@@ -42,7 +42,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
                 return new Response<Category?>(null, 404, "Categoria não encontrada");
 
             category.Title = request.Title;
-            category.Description = request.Description;
+            category.Description = request.Description ?? "";
 
             context.Categories.Update(category);
             await context.SaveChangesAsync();

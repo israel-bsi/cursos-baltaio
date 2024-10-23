@@ -1,5 +1,5 @@
-﻿using Dima.Core.Request.Categories;
-using Dima.Web.Handlers;
+﻿using Dima.Core.Handlers;
+using Dima.Core.Request.Categories;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -17,7 +17,7 @@ public partial class CreateCategoryPage : ComponentBase
     #region Services
 
     [Inject]
-    public CategoryHandler Handler { get; set; } = null!;
+    public ICategoryHandler Handler { get; set; } = null!;
 
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
