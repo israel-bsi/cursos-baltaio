@@ -10,11 +10,10 @@ namespace Dima.Api.Common.Api;
 
 public static class BuilderExtension
 {
-    public static void AddConfiguration(
-        this WebApplicationBuilder builder)
+    public static void AddConfiguration(this WebApplicationBuilder builder)
     {
         Configuration.ConnectionString =
-            builder
+           builder
                 .Configuration
                 .GetConnectionString("DefaultConnection")
             ?? string.Empty;
@@ -42,7 +41,13 @@ public static class BuilderExtension
         builder
             .Services
             .AddDbContext<AppDbContext>(
-                x => { x.UseSqlServer(Configuration.ConnectionString); });
+                x =>
+                {
+                    x.UseSqlServer(Configuration.ConnectionString)
+                        .EnableSensitiveDataLogging()
+                        .EnableDetailedErrors();
+                });
+
         builder.Services
             .AddIdentityCore<User>()
             .AddRoles<IdentityRole<long>>()

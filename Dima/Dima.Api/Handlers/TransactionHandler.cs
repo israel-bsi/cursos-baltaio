@@ -107,8 +107,8 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
     {
         try
         {
-            request.StartDate = DateTime.Now.GetFirstDay();
-            request.EndDate = DateTime.Now.GetLastDay();
+            request.StartDate ??= DateTime.Now.GetFirstDay();
+            request.EndDate ??= DateTime.Now.GetLastDay();
         }
         catch
         {
@@ -121,9 +121,9 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
                 .Transactions
                 .AsNoTracking()
                 .Where(x => x.UserId == request.UserId
-                            && x.CreatedAt >= request.StartDate
-                            && x.CreatedAt <= request.EndDate)
-                .OrderBy(x => x.CreatedAt);
+                            && x.PaidOrReceivedAt >= request.StartDate
+                            && x.PaidOrReceivedAt <= request.EndDate)
+                .OrderBy(x => x.PaidOrReceivedAt);
 
             var transactions = await query
                 .Skip((request.PageNumber - 1) * request.PageSize) // 1-1 = 0 -> 0 * 25 = 0 depois 2-1 = 1 -> 1 * 25 = 25

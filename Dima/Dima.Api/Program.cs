@@ -4,6 +4,7 @@ using Dima.Api.Common.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddConsole();
 builder.AddConfiguration();
 builder.AddSecurity();
 builder.AddDataContexts();
