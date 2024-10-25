@@ -3,7 +3,7 @@
 			[Transaction].UserId, 
 			[Category].Title AS [Category],
 			YEAR([Transaction].[PaidOrReceivedAt]) AS [Year],
-			SUM([Transaction].[Amount]) AS [Expenses] 
+			SUM([Transaction].[Amount]) AS [Incomes] 
 		FROM
 			[Transaction] 
 			INNER JOIN [Category] ON [Transaction].[CategoryId] = [Category].[Id]
