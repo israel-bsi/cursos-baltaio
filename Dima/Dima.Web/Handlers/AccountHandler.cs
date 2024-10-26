@@ -1,6 +1,8 @@
 ﻿using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using Dima.Core.Handlers;
+using Dima.Core.Models.Identity;
 using Dima.Core.Request.Account;
 using Dima.Core.Response;
 
@@ -19,9 +21,13 @@ public class AccountHandler(IHttpClientFactory httpClientFactory) : IAccountHand
     public async Task<Response<string>> RegisterAsync(RegisterRequest request)
     {
         var result = await _httpClient.PostAsJsonAsync("v1/identity/register", request);
-        return result.IsSuccessStatusCode
-            ? new Response<string>("Cadastro realizado com sucesso!", 201, "Cadastro realizado com sucesso!")
-            : new Response<string>(null, (int)result.StatusCode, "Não foi possível realizar o seu cadastro");
+        if (result.IsSuccessStatusCode)
+        {
+            return new Response<string>("Cadastro realizado com sucesso!", 201, "Cadastro realizado com sucesso!");
+        }
+        var content = await result.Content.ReadAsStringAsync();
+        var identityRegisterError = JsonSerializer.Deserialize<IdentityRegisterError>(content);
+        return new Response<string>(null, (int)result.StatusCode, identityRegisterError?.Errors?.ToString());
     }
     public async Task LogoutAsync()
     {
