@@ -21,4 +21,4 @@ public class CreateOrderEndpoint : IEndpoint
 
         return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest();
     }
-}
+}          
