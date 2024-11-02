@@ -1,0 +1,42 @@
+﻿@page "/products"
+@using System.Globalization
+@using BlazingShop.Data
+@using BlazingShop.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext _context
+
+<h1>Products</h1>
+<a href="products/create" class="btn btn-primary">
+    Create
+    <i class="oi oi-plus"></i>
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Title</td>
+                <td>@product.Price.ToString("C" , new CultureInfo("pt-BR"))</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@code
+{
+    public List<Product> Products { get; set; } = new();
+    protected override async Task OnInitializedAsync()
+    {
+        Products = await _context.Products.AsNoTracking().ToListAsync();
+    }
+}
