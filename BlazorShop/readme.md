@@ -1,0 +1,1 @@
+### Projeto usado no curso de Fundamentos do Blazor com .Net 8 da carreira 03. ASP.NET/Blazor Developer do Balta

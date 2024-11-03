@@ -1,0 +1,1 @@
+### Projeto usado no curso de Fullstack com .Net da carreira 03. ASP.NET/Blazor Developer do Balta

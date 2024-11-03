@@ -1,0 +1,1 @@
+### Projeto usado no curso de Modelando Dominios Ricos da Carreira 05. Advanced .NET Developer do Balta
