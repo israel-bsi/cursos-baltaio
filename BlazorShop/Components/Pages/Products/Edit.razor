@@ -1,0 +1,64 @@
+﻿@page "/products/edit/{id:int}"
+@using BlazorShop.Data
+@rendermode InteractiveServer
+@inject ApplicationDbContext _context
+@inject NavigationManager Navigation
+@attribute [Authorize]
+
+<h3>@Model.Title</h3>
+
+<EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Nome do produto</label>
+        <InputText @bind-Value="Model.Title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Preço</label>
+        <InputNumber @bind-Value="Model.Price" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Categoria</label>
+        <InputSelect @bind-Value="Model.CategoryId" class="form-control">
+            @foreach (var category in Categories)
+            {
+                <option value="@category.Id">@category.Title</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/products">Cancelar</a>
+</EditForm>
+
+@code
+{
+    [Parameter] public int Id { get; set; }
+    public Product Model { get; set; } = new();
+    private List<Category> Categories { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await _context
+            .Products
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == Id) ?? new();
+
+        Categories = await _context
+            .Categories
+            .AsNoTracking()
+            .OrderBy(x => x.Title)
+            .ToListAsync();
+    }
+
+    public async Task OnValidSubmitAsync()
+    {
+        _context.Products.Update(Model);
+        await _context.SaveChangesAsync();
+        Navigation.NavigateTo("products");
+    }
+}
