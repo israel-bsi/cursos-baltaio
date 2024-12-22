@@ -9,10 +9,11 @@ namespace Dima.Api.Endpoints.Orders;
 
 public class CancelOrderEndpoint : IEndpoint
 {
-    public static void Map(IEndpointRouteBuilder app) =>
-        app.MapPost("/{id}/cancel", HandleAsync)
+    public static void Map(IEndpointRouteBuilder app) 
+        => app.MapPost("/{id:long}/cancel", HandleAsync)
             .WithName("Orders: Cancel order")
-            .WithName("Cancela um pedido")
+            .WithSummary("Cancela um pedido")
+            .WithDescription("Cancela um pedido")
             .WithOrder(2)
             .Produces<Response<Order?>>();
 
@@ -26,6 +27,6 @@ public class CancelOrderEndpoint : IEndpoint
 
         var result = await handler.CancelAsync(request);
 
-        return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest();
+        return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
     }
 }

@@ -74,9 +74,10 @@ public static class BuilderExtension
     public static void AddServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
-
         builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
-
+        builder.Services.AddTransient<IProductHandler, ProductHandler>();
+        builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
+        builder.Services.AddTransient<IOrderHandler, OrderHandler>();
         builder.Services.AddTransient<IReportHandler, ReportHandler>();
     }
 }
