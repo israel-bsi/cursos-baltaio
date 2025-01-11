@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AccountContext\ValueObjects\" />
+    <Folder Include="SharedContext\Entities\" />
+    <Folder Include="SharedContext\Extensions\" />
+    <Folder Include="SharedContext\ValueObjects\" />
+  </ItemGroup>
+
+</Project>
