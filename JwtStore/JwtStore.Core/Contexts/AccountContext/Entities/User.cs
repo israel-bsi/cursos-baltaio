@@ -1,7 +1,9 @@
-﻿using JwtStore.Core.AccountContext.ValueObjects;
-using JwtStore.Core.SharedContext.Entities;
+﻿using JwtStore.Core.Contexts.AccountContext.ValueObjects;
+using JwtStore.Core.Contexts.SharedContext.Entities;
+using System.Data;
+using Email = JwtStore.Core.Contexts.AccountContext.ValueObjects.Email;
 
-namespace JwtStore.Core.AccountContext.Entities;
+namespace JwtStore.Core.Contexts.AccountContext.Entities;
 
 public class User : Entity
 {
@@ -11,10 +13,17 @@ public class User : Entity
         Email = email;
         Password = new Password(password);
     }
+    public User(string name, Email email, Password password)
+    {
+        Name = name;
+        Email = email;
+        Password = password;
+    }
     public string Name { get; set; } = string.Empty;
     public Email Email { get; private set; } = null!;
     public Password Password { get; private set; } = null!;
     public string Image { get; set; } = string.Empty;
+    public List<Role> Roles { get; set; } = new();
 
     public void UpdatePassword(string plainTextPassword, string code)
     {

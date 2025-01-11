@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AccountContext\ValueObjects\" />
-    <Folder Include="SharedContext\Entities\" />
-    <Folder Include="SharedContext\Extensions\" />
-    <Folder Include="SharedContext\ValueObjects\" />
+    <PackageReference Include="Flunt" Version="2.0.5" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
 </Project>

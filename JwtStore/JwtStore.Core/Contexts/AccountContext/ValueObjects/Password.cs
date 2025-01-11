@@ -1,13 +1,13 @@
 ﻿using System.Security.Cryptography;
-using JwtStore.Core.SharedContext.ValueObjects;
+using JwtStore.Core.Contexts.SharedContext.ValueObjects;
 
-namespace JwtStore.Core.AccountContext.ValueObjects;
+namespace JwtStore.Core.Contexts.AccountContext.ValueObjects;
 
 public class Password : ValueObject
 {
     private const string Valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     private const string Special = "!@#$%ˆ&*(){}[];";
-    protected Password(){}
+    protected Password() { }
 
     public Password(string? text = null)
     {
@@ -18,6 +18,10 @@ public class Password : ValueObject
 
         Hash = Hashing(text);
     }
+
+    public bool Challenge(string plainTextPassword)
+        => Verify(Hash, plainTextPassword);
+
     public string Hash { get; set; } = string.Empty;
     public string ResetCode { get; } = Guid.NewGuid().ToString("N")[..8].ToUpper();
 
@@ -26,7 +30,7 @@ public class Password : ValueObject
         bool includeSpecialChars = true,
         bool upperCase = false)
     {
-        var chars = includeSpecialChars ? (Valid + Special) : Valid;
+        var chars = includeSpecialChars ? Valid + Special : Valid;
         var startRandom = upperCase ? 26 : 0;
         var index = 0;
         var res = new char[length];
